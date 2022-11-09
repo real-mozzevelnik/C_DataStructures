@@ -1,26 +1,28 @@
 #include <stdio.h>
-#include "DataStructures/LinkedList.h"
+#include "DataStructures/Queue.h"
 
 int main()
 {
-    struct LinkedList list = linked_list_constructor();
+    struct Queue list = queue_constructor();
 
     for (int i = 0; i < 10; i++)
     {
         int *x = (int *)malloc(sizeof(int));
         *x = i;
-        list.insert(i, x, &list);
+        list.push(x, &list);
     }
 
-    list.remove(3, &list);
-    list.remove(7, &list);
+    list.pop(&list);
+    list.pop(&list);
+    int *x = (int *)malloc(sizeof(int));
+    *x=346;
+    list.push(x, &list);
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 9; i++)
     {
-        printf("%d\n", *(int *)list.retrieve(i, &list));
+        printf("%d\n", *(int *)list.list.retrieve(i, &list.list));
     }
 
-    list.retrieve(100, &list);
 
     return 0;
 }

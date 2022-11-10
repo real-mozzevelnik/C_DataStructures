@@ -1,28 +1,27 @@
 #include <stdio.h>
 #include "DataStructures/Queue.h"
 
+#include <time.h>
+
 int main()
 {
     struct Queue list = queue_constructor();
 
     for (int i = 0; i < 10; i++)
     {
-        int *x = (int *)malloc(sizeof(int));
-        *x = i;
-        list.push(x, &list);
+        char x[3] = "xyz";
+        list.push(&list, &x, Char, 3);
     }
 
-    list.pop(&list);
-    list.pop(&list);
-    int *x = (int *)malloc(sizeof(int));
-    *x=346;
-    list.push(x, &list);
 
-    for (int i = 0; i < 9; i++)
+
+    for (int i = 0; i < 10; i++)
     {
-        printf("%d\n", *(int *)list.list.retrieve(i, &list.list));
+        printf("%c\n",((char *)list.peek(&list))[2]);
+        list.pop(&list);
     }
 
+    queue_destructor(&list);
 
     return 0;
 }

@@ -7,13 +7,13 @@ void launch(struct Server *server)
 {
     char buffer[30000];
     char *hello = "HTTP/1.1 200 OK\nServer: Apache/2.2.14 (Win32)\nLast-Modified: Wed, 22 Jul 2009 19:15:56 GMT\nContent-Type: text/html\nConnection: Closed\n\n<html><body style=\"background-color:aquamarine;\"><h1>I love You</h1></body></html>";
-    int addr_length = sizeof(server->adress);
+    int addr_length = sizeof(server->address);
     int new_socket;
     
     while (1)
     {
         printf("===== WAITING FOR CONNECTION ====\n");
-        new_socket = accept(server->socket, (struct sockaddr *)&server->adress, (socklen_t *)&addr_length);
+        new_socket = accept(server->socket, (struct sockaddr *)&server->address, (socklen_t *)&addr_length);
         read(new_socket, buffer, 30000);
         printf("%s\n", buffer);
         write(new_socket, hello, strlen(hello));

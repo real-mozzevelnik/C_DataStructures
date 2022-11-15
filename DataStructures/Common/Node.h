@@ -9,6 +9,7 @@ struct Node
 {
     void *data;
     struct Node *next;
+    struct Node *previous;
 };
 
 struct Node node_constructor(void *data, int size);

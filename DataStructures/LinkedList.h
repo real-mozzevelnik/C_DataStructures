@@ -10,7 +10,7 @@ struct LinkedList
     struct Node *head;
     int length;
 
-    void (*insert)(struct LinkedList *linked_list, int index, void *data, int data_type, int size);
+    void (*insert)(struct LinkedList *linked_list, int index, void *data, int size);
     void (*remove)(struct LinkedList *linked_list, int index);
     void * (*retrieve)(struct LinkedList *linked_list, int index);
 };

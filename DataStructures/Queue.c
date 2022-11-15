@@ -1,8 +1,8 @@
 #include "Queue.h"
 
-void push(struct Queue *queue, void *data, int data_type, int size)
+void push(struct Queue *queue, void *data, int size)
 {
-    queue->list.insert(&queue->list, queue->list.length, data, data_type, size);
+    queue->list.insert(&queue->list, queue->list.length, data, size);
 }
 
 void * peek(struct Queue *queue)

@@ -1,8 +1,6 @@
 #ifndef LinkedList_h
 #define LinkedList_h
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "../Common/Node.h"
 
 struct LinkedList

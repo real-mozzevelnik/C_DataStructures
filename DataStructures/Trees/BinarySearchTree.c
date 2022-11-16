@@ -1,5 +1,7 @@
 #include "BinarySearchTree.h"
 #include <stdlib.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 struct Node * create_node_bst(void *data, int size);
 void destroy_node_bst(struct Node *node_to_destroy);
@@ -12,6 +14,7 @@ void insert_bst(struct BinarySearchTree *tree, void *data, int size);
 struct BinarySearchTree binary_search_tree_constructor(int (*compare)(void *data_one, void *data_two))
 {
     struct BinarySearchTree tree;
+    tree.head = NULL;
     tree.compare = compare;
     tree.search = search_bst;
     tree.insert = insert_bst;
@@ -116,5 +119,23 @@ void insert_bst(struct BinarySearchTree *tree, void *data, int size)
         {
             cursor->previous = create_node_bst(data, size);
         }
+    }
+}
+
+int binary_search_tree_str_compare(void *data_one, void *data_two)
+{
+    int comparison = strcmp(data_one, data_two);
+    
+    if (comparison > 0)
+    {
+        return 1;
+    }
+    else if (comparison < 0)
+    {
+        return -1;
+    }
+    else
+    {
+        return 0;
     }
 }

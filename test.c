@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "DataStructures/Queue.h"
+#include "DataStructures/Lists/Queue.h"
 
 #include <time.h>
 
@@ -10,7 +10,7 @@ int main()
     for (int i = 0; i < 10; i++)
     {
         char x[3] = "xyz";
-        list.push(&list, &x, Char, 3);
+        list.push(&list, &x, 3);
     }
 
 

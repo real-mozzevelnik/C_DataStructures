@@ -1,40 +1,42 @@
 #include "BinarySearchTree.h"
+#include <stdlib.h>
 
-struct Node * create_node(void *data, int size);
-void destroy_node(struct Node *node_to_destroy);
+struct Node * create_node_bst(void *data, int size);
+void destroy_node_bst(struct Node *node_to_destroy);
+struct Node * iterate_bst(struct BinarySearchTree *tree, struct Node *cursor, void *data, int *direction);
 
-void * search(struct BinarySearchTree *tree, void *data);
-void insert(struct BinarySearchTree *tree, void *data, int size);
+void * search_bst(struct BinarySearchTree *tree, void *data);
+void insert_bst(struct BinarySearchTree *tree, void *data, int size);
 
 struct BinarySearchTree binary_search_tree_constructor(int (*compare)(void *data_one, void *data_two))
 {
     struct BinarySearchTree tree;
     tree.compare = compare;
-    tree.search = search;
-    tree.insert = insert;
+    tree.search = search_bst;
+    tree.insert = insert_bst;
 
     return tree;
 }
 
-struct Node * create_node(void *data, int size)
+struct Node * create_node_bst(void *data, int size)
 {
     struct Node *new_node = (struct Node*)malloc(sizeof(struct Node));
     *new_node = node_constructor(data, size);
     return new_node;
 }
 
-void destroy_node(struct Node *node_to_destoy)
+void destroy_node_bst(struct Node *node_to_destoy)
 {
     node_destructor(node_to_destoy);
 }
 
-struct Node * iterate(struct BinarySearchTree *tree, struct Node *cursor, void *data, int *direction)
+struct Node * iterate_bst(struct BinarySearchTree *tree, struct Node *cursor, void *data, int *direction)
 {
     if (tree->compare(cursor->data, data) == 1)
     {
         if (cursor->next)
         {
-            return iterate(tree, cursor->next, data, direction);
+            return iterate_bst(tree, cursor->next, data, direction);
         }
         else
         {
@@ -46,7 +48,7 @@ struct Node * iterate(struct BinarySearchTree *tree, struct Node *cursor, void *
     {
         if (cursor->previous)
         {
-            return iterate(tree, cursor->previous, data, direction);
+            return iterate_bst(tree, cursor->previous, data, direction);
         }
         else
         {
@@ -61,11 +63,11 @@ struct Node * iterate(struct BinarySearchTree *tree, struct Node *cursor, void *
     }
 }
 
-void * search(struct BinarySearchTree *tree, void *data)
+void * search_bst(struct BinarySearchTree *tree, void *data)
 {
-    int *direction = NULL;
-    struct Node *cursor = iterate(tree, tree->head, data, direction);
-    if (*direction == 0)
+    int direction = 0;
+    struct Node *cursor = iterate_bst(tree, tree->head, data, &direction);
+    if (direction == 0)
     {
         return cursor->data;
     }
@@ -75,17 +77,24 @@ void * search(struct BinarySearchTree *tree, void *data)
     }
 }
 
-void insert(struct BinarySearchTree *tree, void *data, int size)
+void insert_bst(struct BinarySearchTree *tree, void *data, int size)
 {
-    int *direction = NULL;
-    struct Node *cursor = iterate(tree, tree->head, data, direction);
-
-    if (*direction == 1)
+    if (!tree->head)
     {
-        cursor->next = create_node(data, size);
+        tree->head = create_node_bst(data, size);
     }
-    else if (*direction == -1)
+    else
     {
-        cursor->previous = create_node(data, size);
+        int direction = 0;
+        struct Node *cursor = iterate_bst(tree, tree->head, data, &direction);
+
+        if (direction == 1)
+        {
+            cursor->next = create_node_bst(data, size);
+        }
+        else if (direction == -1)
+        {
+            cursor->previous = create_node_bst(data, size);
+        }
     }
 }

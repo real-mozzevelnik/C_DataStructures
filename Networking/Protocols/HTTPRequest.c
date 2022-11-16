@@ -1,4 +1,5 @@
 #include "HTTPRequest.h"
+#include "../../DataStructures/Lists/Queue.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -45,21 +46,20 @@ int method_select(char *method)
 struct HTTPRequest http_request_constructor(char *request_string)
 {
     struct HTTPRequest request;
-
-    for (int i = 0; i <= strlen(request_string) - 1; i++)
+    char requested[strlen(request_string)];
+    strcpy(requested, request_string);
+    for (int i = 0; i <= strlen(requested) - 1; i++)
     {
-        if (request_string[i] == '\n' && request_string[i + 1] == '\n')
+        if (requested[i] == '\n' && requested[i + 1] == '\n')
         {
-             request_string[i + 1] = '|';
+            printf("a/n");
+            requested[i + 1] = '|';
         }
     }
 
-    char *request_line = strtok(request_string, "\n");
+    char *request_line = strtok(requested, "\n");
     char *header_fields = strtok(NULL, "|");
     char *body = strtok(NULL, "|");
-
-    
-    
     char *method = strtok(request_line, " ");
     request.Method = method_select(method);
     char *URI = strtok(NULL, " ");
@@ -68,7 +68,29 @@ struct HTTPRequest http_request_constructor(char *request_string)
     HTTPVersion = strtok(HTTPVersion, "/");
     HTTPVersion = strtok(NULL, "/");
     request.HTTPVersion = (float)atof(HTTPVersion);
-    
-    
+
+    request.header_fields = dictionary_constructor(compare_string_keys);
+
+    struct Queue headers = queue_constructor();
+
+    char *token = strtok(header_fields, "\n");
+    while (token)
+    {
+        headers.push(&headers, token, sizeof(*token));
+        token = strtok(NULL, "\n");
+    }
+
+    char *header = (char*)headers.peek(&headers);
+    char *key;
+    char *value;
+    while (header)
+    {
+        key = strtok(header, ":");
+        value = strtok(NULL, "|");
+        request.header_fields.insert(&request.header_fields, key, sizeof(*key), value, sizeof(*value));
+        headers.pop(&headers);
+        header = (char*)headers.peek(&headers);
+    }
+
     return request;
 }

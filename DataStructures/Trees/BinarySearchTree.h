@@ -13,7 +13,7 @@ struct BinarySearchTree
 };
 
 struct BinarySearchTree binary_search_tree_constructor(int (*compare)(void *data_one, void *data_two));
-void binary_search_tree_destructor(void);
+void binary_search_tree_destructor(struct BinarySearchTree *tree);
 
 int binary_search_tree_int_compare(void *data_one, void *data_two);
 int binary_search_tree_float_compare(void *data_one, void *data_two);

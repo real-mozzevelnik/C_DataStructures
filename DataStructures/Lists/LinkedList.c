@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Functions to create and destroy nodes in ll.
 struct Node * create_node_ll(void *data, int size);
 void destroy_node_ll(struct Node *node_to_destroy);
 
@@ -23,6 +24,7 @@ struct LinkedList linked_list_constructor()
     return new_list;
 }
 
+//Destroys every single node in ll.
 void linked_list_destructor(struct LinkedList *linked_list)
 {
     for (int i = 0; i < linked_list->length; i++)
@@ -31,6 +33,7 @@ void linked_list_destructor(struct LinkedList *linked_list)
     }
 }
 
+//Creates node. Uses memory allocation.
 struct Node * create_node_ll(void *data, int size)
 {
     struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
@@ -45,11 +48,14 @@ void destroy_node_ll(struct Node *node_to_destoy)
 
 struct Node * iterate_ll(struct LinkedList *linked_list, int index)
 {
+    //Check if index is valid.
     if (index < 0 || index >= linked_list->length)
     {
         return NULL;
     }
+    //Create a cursor for iteration.
     struct Node *cursor = linked_list->head;
+    //Iterates until the required node is reached.
     for (int i = 0; i<index; i++)
     {
         cursor = cursor->next;
@@ -62,11 +68,13 @@ void insert_ll(struct LinkedList *linked_list, int index, void *data, int size)
     struct Node *node_to_insert = create_node_ll(data, size);
     if (index == 0)
     {
+        //Changing the ll head node.
         node_to_insert->next = linked_list->head;
         linked_list->head = node_to_insert;
     }
     else
     {
+        //Inserting new node.
         struct Node *cursor = iterate_ll(linked_list, index - 1);
         node_to_insert->next = cursor->next;
         cursor->next = node_to_insert;
@@ -78,12 +86,14 @@ void remove_node_ll(struct LinkedList *linked_list, int index)
 {
     if (index == 0)
     {
+        //Destroy the head node.
         struct Node *node_to_remove = linked_list->head;
         linked_list->head = node_to_remove->next;
         destroy_node_ll(node_to_remove);
     }
     else
     {
+        //Destroy required node.
         struct Node *cursor = iterate_ll(linked_list, index-1);
         struct Node *node_to_remove = cursor->next;
         cursor->next = node_to_remove->next;
@@ -92,6 +102,7 @@ void remove_node_ll(struct LinkedList *linked_list, int index)
     linked_list->length -= 1;
 }
 
+//Find the required node and returnd it's data.
 void* retrieve_ll(struct LinkedList *linked_list, int index)
 {
     struct Node *cursor = iterate_ll(linked_list, index);

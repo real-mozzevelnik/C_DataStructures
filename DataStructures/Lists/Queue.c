@@ -1,5 +1,7 @@
 #include "Queue.h"
 
+//Actually uses the ll functions.
+
 void push(struct Queue *queue, void *data, int size)
 {
     queue->list.insert(&queue->list, queue->list.length, data, size);

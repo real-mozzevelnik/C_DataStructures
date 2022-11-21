@@ -22,9 +22,9 @@ struct BinarySearchTree binary_search_tree_constructor(int (*compare)(void *data
     return tree;
 }
 
-void binary_search_tree_destructor(struct BinarySearchTree *tree)
+void binary_search_tree_destructor(struct BinarySearchTree tree)
 {
-    recursive_tree_destructor(tree->head);
+    recursive_tree_destructor(tree.head);
 }
 
 struct Node * create_node_bst(void *data, int size)

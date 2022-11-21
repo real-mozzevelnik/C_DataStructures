@@ -8,6 +8,5 @@ struct Entry
 };
 
 struct Entry entry_constructor(void *key, int key_size, void *value, int value_size);
-
 void entry_destructor(struct Entry *entry);
 #endif

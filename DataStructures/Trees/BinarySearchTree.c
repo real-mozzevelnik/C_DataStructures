@@ -1,6 +1,6 @@
 #include "BinarySearchTree.h"
 #include <stdlib.h>
-#include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 struct Node * create_node_bst(void *data, int size);

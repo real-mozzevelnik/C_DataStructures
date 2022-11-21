@@ -56,7 +56,7 @@ struct Node * iterate_ll(struct LinkedList *linked_list, int index)
     //Create a cursor for iteration.
     struct Node *cursor = linked_list->head;
     //Iterates until the required node is reached.
-    for (int i = 0; i<index; i++)
+    for (int i = 0; i < index; i++)
     {
         cursor = cursor->next;
     }
@@ -88,8 +88,11 @@ void remove_node_ll(struct LinkedList *linked_list, int index)
     {
         //Destroy the head node.
         struct Node *node_to_remove = linked_list->head;
-        linked_list->head = node_to_remove->next;
-        destroy_node_ll(node_to_remove);
+        if (node_to_remove)
+        {
+            linked_list->head = node_to_remove->next;
+            destroy_node_ll(node_to_remove);
+        }
     }
     else
     {

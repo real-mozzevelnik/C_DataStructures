@@ -13,7 +13,7 @@ struct Entry entry_constructor(void *key, int key_size, void *value, int value_s
     return entry;
 }
 
-void entry_destuctor(struct Entry *entry)
+void entry_destructor(struct Entry *entry)
 {
     free(entry->key);
     free(entry->value);

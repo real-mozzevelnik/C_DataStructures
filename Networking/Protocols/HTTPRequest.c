@@ -2,6 +2,7 @@
 #include "../../DataStructures/Lists/Queue.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void extract_request_line_fields(struct HTTPRequest *request, char *request_line);
 void extract_header_fields(struct HTTPRequest *request, char *header_fields);
@@ -9,6 +10,7 @@ void extract_body(struct HTTPRequest *reauest, char *body);
 
 struct HTTPRequest http_request_constructor(char *request_string)
 {
+    printf("1\n");
     struct HTTPRequest request;
 
     // char *requested = (char*)malloc((strlen(request_string) + 1) * sizeof(char));
@@ -49,7 +51,7 @@ void extract_request_line_fields(struct HTTPRequest *request, char *request_line
     char fields[strlen(request_line)];
     strcpy(fields, request_line);
 
-    char method = strtok(fields, " ");
+    char *method = strtok(fields, " ");
     char *uri = strtok(NULL, " ");
     char *http_version = strtok(NULL, "\0");
 

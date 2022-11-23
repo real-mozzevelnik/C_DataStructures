@@ -35,8 +35,8 @@ void recursive_dictionary_destroy(struct Node *cursor)
         recursive_dictionary_destroy(cursor->next);
     }
     entry_destructor((struct Entry *)cursor->data);
-    free(cursor->data);
-    free(cursor);
+    // free(cursor->data);
+    // free(cursor);
 }
 
 void * search_dict(struct Dictionary *dictionary, void *key, int key_size)

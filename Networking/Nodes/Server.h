@@ -4,6 +4,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
+/*Struct Server is used as the foundation for nodes that need to operate as servers.
+Connects to the network and listens on a given port.*/
 struct Server
 {
     int domain;
@@ -17,6 +19,7 @@ struct Server
 
     int socket;
 
+    // Function given in parameters of constructor describing the server behavior.
     void (*launch)(struct Server *server);
 };
 

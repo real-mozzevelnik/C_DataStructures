@@ -44,7 +44,7 @@ void recursive_dictionary_destroy(struct Node *cursor)
     entry_destructor((struct Entry *)cursor->data);
     free(cursor);
 }
-#include<stdio.h>
+
 void * search_dict(struct Dictionary *dictionary, void *key, int key_size)
 {
     // As we are searching in tree, we need some entry to compare with.

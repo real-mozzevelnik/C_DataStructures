@@ -1,18 +1,21 @@
 #include "Queue.h"
 
-//Actually uses the ll functions.
+//Actually uses the linked list functions.
 
+// Adds new node to the end of the Queue.
 void push(struct Queue *queue, void *data, int size)
 {
     queue->list.insert(&queue->list, queue->list.length, data, size);
 }
 
+// Retrieve first node data.
 void * peek(struct Queue *queue)
 {
     void *data = queue->list.retrieve(&queue->list, 0);
     return data;
 }
 
+// Removes first node from the Queue
 void pop(struct Queue *queue)
 {
     queue->list.remove(&queue->list, 0);

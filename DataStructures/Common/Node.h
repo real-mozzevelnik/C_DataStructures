@@ -9,8 +9,8 @@ node_destructor free all the allocated memory.*/
 struct Node
 {
     void *data;
-    struct Node *next;
-    struct Node *previous;
+    struct Node *next;  // pointer to the next node in structure
+    struct Node *previous; // pointer to the previous node in structure
 };
 
 // Constructor and destructor to allocate and free memory for data.

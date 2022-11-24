@@ -21,6 +21,7 @@ struct Node node_constructor(void *data, int size)
     //Intializing the pointers.
     node.next = NULL;
     node.previous = NULL;
+    
     return node;
 }
 

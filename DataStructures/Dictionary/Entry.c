@@ -4,6 +4,7 @@
 
 struct Entry entry_constructor(void *key, int key_size, void *value, int value_size)
 {
+    // Makes copy of given data, uses memcpy and requires data sizes to store any type of data.
     struct Entry entry;
     entry.key = malloc(key_size);
     entry.value = malloc(value_size);

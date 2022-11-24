@@ -4,11 +4,12 @@
 #include "LinkedList.h"
 
 /*Struct Queue is a version of LinkedList, where data
-always be added to the end and removed from the front.*/
+always be added to the end and removed from the front.
+Uses memory allocation.*/
 
 struct Queue
 {
-    //Embedding ll.
+    //Embedding linked list.
     struct LinkedList list;
 
     //Add new item to the end.
@@ -20,6 +21,7 @@ struct Queue
 };
 
 struct Queue queue_constructor(void);
+// Free allocated memory.
 void queue_destructor(struct Queue *queue);
 
 #endif

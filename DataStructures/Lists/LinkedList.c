@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//Functions to create and destroy nodes in ll.
+//Functions to create and destroy nodes in linked list.
 struct Node * create_node_ll(void *data, int size);
 void destroy_node_ll(struct Node *node_to_destroy);
 
@@ -13,6 +13,7 @@ void * retrieve_ll(struct LinkedList *linked_list, int index);
 
 struct LinkedList linked_list_constructor()
 {
+    // Init of struct
     struct LinkedList new_list;
     new_list.head = NULL;
     new_list.length = 0;
@@ -41,11 +42,13 @@ struct Node * create_node_ll(void *data, int size)
     return new_node;
 }
 
+// Free node data and node itself.
 void destroy_node_ll(struct Node *node_to_destoy)
 {
     node_destructor(node_to_destoy);
 }
 
+// Iterates through nodes until node with required index is reached.
 struct Node * iterate_ll(struct LinkedList *linked_list, int index)
 {
     //Check if index is valid.
@@ -68,7 +71,7 @@ void insert_ll(struct LinkedList *linked_list, int index, void *data, int size)
     struct Node *node_to_insert = create_node_ll(data, size);
     if (index == 0)
     {
-        //Changing the ll head node.
+        //Changing the linked list head node.
         node_to_insert->next = linked_list->head;
         linked_list->head = node_to_insert;
     }
@@ -79,6 +82,7 @@ void insert_ll(struct LinkedList *linked_list, int index, void *data, int size)
         node_to_insert->next = cursor->next;
         cursor->next = node_to_insert;
     }
+    // Increase linked list length.
     linked_list->length += 1;
 }
 
@@ -88,6 +92,7 @@ void remove_node_ll(struct LinkedList *linked_list, int index)
     {
         //Destroy the head node.
         struct Node *node_to_remove = linked_list->head;
+        // Checks if head exist.
         if (node_to_remove)
         {
             linked_list->head = node_to_remove->next;
@@ -102,10 +107,11 @@ void remove_node_ll(struct LinkedList *linked_list, int index)
         cursor->next = node_to_remove->next;
         destroy_node_ll(node_to_remove);
     }
+    // Decrease linked list length.
     linked_list->length -= 1;
 }
 
-//Find the required node and returnd it's data.
+//Finds the required node and returns it's data.
 void* retrieve_ll(struct LinkedList *linked_list, int index)
 {
     struct Node *cursor = iterate_ll(linked_list, index);

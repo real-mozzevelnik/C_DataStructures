@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "DataStructures/Lists/Queue.h"
 
-#include <time.h>
-
 int main()
 {
     struct Queue list = queue_constructor();

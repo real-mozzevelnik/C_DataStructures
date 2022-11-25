@@ -1,21 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "DataStructures/Dictionary/Dictionary.h"
+#include "Networking/Nodes/HTTPServer.h"
 
-int cmp(void* a, void* b);
+char * f(struct HTTPServer *server, struct HTTPRequest *request)
+{
+    return 0;
+}
 
 int main()
 {
-    struct Dictionary dict = dictionary_constructor(compare_string_keys);
-    char *key = "f";
-    char *key2 = "vg";
-    int val = 10;
-    int val2 = 11;
-    dict.insert(&dict, key, sizeof(key), &val, sizeof(val));
-    dict.insert(&dict, key2, sizeof(key2), &val2, sizeof(val2));
-    printf("x: %d\n", *(int*)dict.search(&dict, key, sizeof(key)));
-    printf("x: %d\n", *(int*)dict.search(&dict, key2, sizeof(key2)));
-    dictionary_destructor(&dict);
+    struct HTTPServer http = http_server_constructor();
+    http.register_routes(&http, f, "hkjlj", 1, 1);
 
     return 0;
 }

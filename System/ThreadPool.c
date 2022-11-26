@@ -49,12 +49,12 @@ void thread_pool_destructor(struct ThreadPool *thread_pool)
     queue_destructor(&thread_pool->work);
 }
 
-struct ThreadJob thread_job_constructor(void * (*job_function)(void *arg), void *arg)
+struct ThreadJob thread_job_constructor(void * (*job)(void *arg), void *arg)
 {
-    struct ThreadJob job;
-    job.job = job_function;
-    job.arg = arg;
-    return job;
+    struct ThreadJob thread_job;
+    thread_job.job = job;
+    thread_job.arg = arg;
+    return thread_job;
 }
 
 void * generic_thread_function(void *arg)
@@ -64,21 +64,21 @@ void * generic_thread_function(void *arg)
     {
         pthread_mutex_lock(&thread_pool->lock);
         pthread_cond_wait(&thread_pool->signal, &thread_pool->lock);
-        struct ThreadJob job = *(struct ThreadJob*)thread_pool->work.peek(&thread_pool->work);
+        struct ThreadJob thread_job = *(struct ThreadJob*)thread_pool->work.peek(&thread_pool->work);
         thread_pool->work.pop(&thread_pool->work);
         pthread_mutex_unlock(&thread_pool->lock);
-        if (job.job)
+        if (thread_job.job)
         {
-            job.job(job.arg);
+            thread_job.job(thread_job.arg);
         }
     }
     return NULL;
 }
 
-void add_work(struct ThreadPool *thread_pool, struct ThreadJob job)
+void add_work(struct ThreadPool *thread_pool, struct ThreadJob thread_job)
 {
     pthread_mutex_lock(&thread_pool->lock);
-    thread_pool->work.push(&thread_pool->work, &job, sizeof(job));
+    thread_pool->work.push(&thread_pool->work, &thread_job, sizeof(thread_job));
     pthread_cond_signal(&thread_pool->signal);
     pthread_mutex_unlock(&thread_pool->lock);
 }

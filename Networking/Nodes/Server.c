@@ -1,9 +1,12 @@
 #include "Server.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+void register_routes_server(struct Server *server, char *(*route_function)(void *arg), char *path);
 
 struct Server server_constructor(int domain, int service, int protocol, 
-    u_long interface, int port, int backlog, void (*launch)(struct Server *server))
+    u_long interface, int port, int backlog)
 {
     struct Server server;
 
@@ -22,6 +25,10 @@ struct Server server_constructor(int domain, int service, int protocol,
 
     // Create a socket.
     server.socket = socket(domain, service, protocol);
+
+    server.routes = dictionary_constructor(compare_string_keys);
+
+    server.register_routes = register_routes_server;
     
     // Check the connection.
     if (server.socket == 0)
@@ -44,8 +51,12 @@ struct Server server_constructor(int domain, int service, int protocol,
         exit(1);
     }
 
-    // Function given in parameters of constructor describing the server behavior.
-    server.launch = launch;
-
     return server;
+}
+
+void register_routes_server(struct Server *server, char *(*route_function)(void *arg), char *path)
+{
+    struct ServerRoute route;
+    route.route_function = route_function;
+    server->routes.insert(&server->routes, path, sizeof(char)*strlen(path)+1, &route, sizeof(route));
 }

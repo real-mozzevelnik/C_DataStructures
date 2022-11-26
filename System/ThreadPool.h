@@ -23,7 +23,7 @@ struct ThreadPool
 };
 
 struct ThreadPool thread_pool_constructor(int num_threads);
-struct ThreadJob thread_job_constructor(void * (*job_function)(void *arg), void *arg);
+struct ThreadJob thread_job_constructor(void * (*job)(void *arg), void *arg);
 
 void thread_pool_destructor(struct ThreadPool *thread_pool);
 

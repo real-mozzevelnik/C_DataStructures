@@ -9,6 +9,7 @@ char * f(struct HTTPServer *server, struct HTTPRequest *request)
 
 int main()
 {
+    // struct HTTPServer server;
     struct HTTPServer http = http_server_constructor();
     http.register_routes(&http, f, "hkjlj", 1, 1);
 

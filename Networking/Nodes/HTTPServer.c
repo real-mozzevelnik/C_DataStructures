@@ -53,12 +53,12 @@ void register_routes(struct HTTPServer *server, char * (*route_function)(struct 
 
 void launch(struct HTTPServer *server)
 {
-    struct ThreadPool thread_pool = thread_pool_constructor(20);
+    struct ThreadPool thread_pool = thread_pool_constructor(20); //20
     struct sockaddr *sock_addr = (struct sockaddr *)&server->server.address;
     socklen_t address_length = (socklen_t)sizeof(server->server.address);
     while (1)
     {
-        struct ClientServer *client_server = (struct ClientServer *)malloc(sizeof(struct ClientServer));
+        struct ClientServer *client_server = malloc(sizeof(struct ClientServer));
         client_server->client =  accept(server->server.socket, sock_addr, &address_length);
         client_server->server = server;
         struct ThreadJob job = thread_job_constructor(handler, client_server);

@@ -12,7 +12,7 @@ struct Server
     int domain;
     int service;
     int protocol;
-    u_long interface; //maybeint
+    u_long interface;
     int port;
     int backlog;
 

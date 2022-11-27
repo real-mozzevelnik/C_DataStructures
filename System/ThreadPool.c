@@ -1,8 +1,10 @@
 #include "ThreadPool.h"
 #include <stdlib.h>
+#include <time.h>
+#include <stdio.h>
 
 void * generic_thread_function(void *arg);
-void add_work(struct ThreadPool *thread_pool, struct ThreadJob job);
+void add_work(struct ThreadPool *thread_pool, struct ThreadJob thread_job);
 
 struct ThreadPool thread_pool_constructor(int num_threads)
 {
@@ -20,7 +22,7 @@ struct ThreadPool thread_pool_constructor(int num_threads)
 
     pthread_mutex_lock(&thread_pool.lock);
 
-    thread_pool.pool = (pthread_t*)malloc(sizeof(pthread_t)*num_threads);
+    thread_pool.pool = malloc(sizeof(pthread_t)*num_threads);
 
     for (int i = 0; i < num_threads; i++)
     {

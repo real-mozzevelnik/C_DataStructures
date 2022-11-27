@@ -11,6 +11,10 @@ void insert_ll(struct LinkedList *linked_list, int index, void *data, int size);
 void remove_node_ll(struct LinkedList *linked_list, int index);
 void * retrieve_ll(struct LinkedList *linked_list, int index);
 
+void bubble_sort_ll(struct LinkedList *linked_list, int (*compare)(void *a, void *b));
+short binary_search_ll(struct LinkedList *linked_list, void *query, int (*compare)(void *a, void *b));
+
+
 struct LinkedList linked_list_constructor()
 {
     // Init of struct
@@ -21,6 +25,9 @@ struct LinkedList linked_list_constructor()
     new_list.insert = insert_ll;
     new_list.remove = remove_node_ll;
     new_list.retrieve = retrieve_ll;
+
+    new_list.sort = bubble_sort_ll;
+    new_list.search = binary_search_ll;
     
     return new_list;
 }
@@ -119,4 +126,60 @@ void* retrieve_ll(struct LinkedList *linked_list, int index)
         return cursor->data;
     else
         return NULL;
+}
+
+void bubble_sort_ll(struct LinkedList *linked_list, int (*compare)(void *a, void *b))
+{
+    for (struct Node *i = iterate_ll(linked_list, 0); i; i = i->next)
+    {
+        for (struct Node *n = i->next; n; n = n->next)
+        {
+            if (compare(i->data, n->data) > 0)
+            {
+                void *temporary = n->data;
+                n->data = i->data;
+                i->data = temporary; 
+            }
+        }
+    }
+}
+
+short binary_search_ll(struct LinkedList *linked_list, void *query, int (*compare)(void *a, void *b))
+{
+    int position = linked_list->length/2;
+    int min_checked = 0;
+    int max_checked = linked_list->length;
+    while (max_checked > min_checked)
+    {
+        void *data = linked_list->retrieve(linked_list, position);
+        if (compare(data, query) == 1)
+        {
+            max_checked = position;
+            if (position != (min_checked + position)/2)
+            {
+                position = (min_checked + position)/2;
+            }
+            else
+            {
+                break;
+            }
+        }
+        else if (compare(data, query) == -1)
+        {
+            min_checked = position;
+            if (position != (max_checked + position)/2)
+            {
+                position = (max_checked + position)/2;
+            }
+            else
+            {
+                break;
+            }
+        }
+        else
+        {
+            return 1;
+        }
+    }
+    return 0;
 }

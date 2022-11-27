@@ -1,29 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Networking/Nodes/HTTPServer.h"
-#include "System/ThreadPool.h"
+#include "DataStructures/Lists/LinkedList.h"
 
-char * home(struct HTTPServer *server, struct HTTPRequest *request)
+int cmp(void *a, void *b)
 {
-    char *x = render_template(1, "/home/vadimchumachenko/progs/c/p2p/index.html");
-    return x;
-}
+    int *x = a;
+    int *y = b;
+    if (*x > *y)
+        return 1;
 
-char * about(struct HTTPServer *server, struct HTTPRequest *request)
-{
-    return render_template(1, "/home/vadimchumachenko/progs/c/p2p/about.html");
+    else
+        return -11;
 }
 
 int main()
 {
-    // struct HTTPServer server;
-    struct HTTPServer server = http_server_constructor();
-
-    server.register_routes(&server, home, "/", 0);
-    server.register_routes(&server, about, "/about", 0);
-
-    server.launch(&server);
-
-
+    struct LinkedList list = linked_list_constructor();
+    for (int i = 10; i > 0; i--)
+    {
+        list.insert(&list, 10-i, &i, sizeof(i));
+    }
+    list.sort(&list, cmp);
+    for (int i = 0; i <10; i++)
+    {
+        printf("%d\n", *(int*)list.retrieve(&list, i));
+    }
     return 0;
 }
+

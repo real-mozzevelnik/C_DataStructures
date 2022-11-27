@@ -12,10 +12,14 @@ struct LinkedList
     //Number of nodes in the chain.
     int length;
 
-    // LinkedList functions
+    // LinkedList functions.
     void (*insert)(struct LinkedList *linked_list, int index, void *data, int size);
     void (*remove)(struct LinkedList *linked_list, int index);
     void * (*retrieve)(struct LinkedList *linked_list, int index);
+
+    //Sort the list.
+    void (*sort)(struct LinkedList *linked_list, int (*compare)(void *a, void *b));
+    short (*search)(struct LinkedList *linked_list, void *query, int (*compare)(void *a, void *b));
 };
 
 struct LinkedList linked_list_constructor(void);

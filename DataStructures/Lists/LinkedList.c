@@ -95,6 +95,11 @@ void insert_ll(struct LinkedList *linked_list, int index, void *data, int size)
 
 void remove_node_ll(struct LinkedList *linked_list, int index)
 {
+    if (index < 0 || index >= linked_list->length)
+    {
+        printf("Error wit ll");
+        exit(1);
+    }
     if (index == 0)
     {
         //Destroy the head node.
